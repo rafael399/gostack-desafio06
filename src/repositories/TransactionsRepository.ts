@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 
 import Transaction from '../models/Transaction';
 // import CategoriesRepository from './CategoriesRepository';
@@ -32,25 +32,6 @@ class TransactionsRepository extends Repository<Transaction> {
       outcome,
       total,
     };
-  }
-
-  public async listTransactions(): Promise<Transaction[]> {
-    const transactionsRepository = getCustomRepository(TransactionsRepository);
-    // const categoriesRepository = getCustomRepository(CategoriesRepository);
-
-    const transactions = await transactionsRepository.find();
-
-    // transactions.map(async transaction => {
-    //   transaction.category = await categoriesRepository.findById(
-    //     transaction.category_id,
-    //   );
-
-    //   delete transaction.created_at;
-    //   delete transaction.updated_at;
-    //   delete transaction.category_id;
-    // });
-
-    return transactions;
   }
 }
 

@@ -4,7 +4,6 @@ import { getCustomRepository } from 'typeorm';
 import uploadConfig from '../config/upload';
 
 import TransactionsRepository from '../repositories/TransactionsRepository';
-// import CategoriesRepository from '../repositories/CategoriesRepository';
 import CreateTransactionService from '../services/CreateTransactionService';
 import DeleteTransactionService from '../services/DeleteTransactionService';
 import ImportTransactionsService from '../services/ImportTransactionsService';
@@ -14,9 +13,8 @@ const upload = multer(uploadConfig);
 
 transactionsRouter.get('/', async (request, response) => {
   const transactionsRepository = getCustomRepository(TransactionsRepository);
-  // const categoriesRepository = getCustomRepository(CategoriesRepository);
 
-  const transactions = await transactionsRepository.listTransactions();
+  const transactions = await transactionsRepository.find();
   const balance = await transactionsRepository.getBalance();
 
   return response.json({ transactions, balance });
@@ -44,7 +42,7 @@ transactionsRouter.delete('/:id', async (request, response) => {
 
   await deleteTransaction.execute(id);
 
-  return response.json({ msg: 'Transaction deleted' });
+  return response.status(204).json({ msg: 'Transaction deleted' });
 });
 
 transactionsRouter.post(

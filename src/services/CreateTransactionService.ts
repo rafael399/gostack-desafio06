@@ -3,7 +3,7 @@ import AppError from '../errors/AppError';
 
 import Transaction from '../models/Transaction';
 import TransactionsRepository from '../repositories/TransactionsRepository';
-import CreateCategoryService from './CreateCategoryService';
+import CategoriesRepository from '../repositories/CategoriesRepository';
 
 interface Request {
   title: string;
@@ -34,16 +34,25 @@ class CreateTransactionService {
       );
     }
 
-    const createCategory = new CreateCategoryService();
+    const categoriesRepository = getCustomRepository(CategoriesRepository);
 
-    const categoryObject = await createCategory.execute(category);
+    let transactionCategory = await categoriesRepository.findOne({
+      where: { title: category },
+    });
+
+    if (!transactionCategory) {
+      transactionCategory = categoriesRepository.create({
+        title: category,
+      });
+
+      await categoriesRepository.save(transactionCategory);
+    }
 
     const transaction = transactionsRepository.create({
       title,
       value,
       type,
-      category_id: categoryObject.id,
-      // category: categoryObject,
+      category: transactionCategory,
     });
 
     await transactionsRepository.save(transaction);
