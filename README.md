@@ -43,7 +43,7 @@ Pego de Rocketseat **[Desafio06](https://github.com/Rocketseat/bootcamp-gostack-
 
 Nesse desafio, você deve continuar desenvolvendo a aplicação de gestão de transações, treinando o que você aprendeu até agora no Node.js junto ao TypeScript, mas dessa vez incluindo o uso de banco de dados com o TypeORM e envio de arquivos com o Multer!
 
-Essa será uma aplicação que deve armazenar transações financeiras de entrada e saída e permitir o cadastro e a listagem dessas transações, além de permitir a geração de relatórios a partir do envio de um arquivo csv.
+Essa será uma aplicação que deve armazenar transações financeiras de entrada e saída e permitir o cadastro e a listagem dessas transações, além de permitir a criação de novos registros no banco de dados a partir do envio de um arquivo csv.
 
 ### Template da aplicação
 
@@ -75,8 +75,6 @@ Agora que você já está com o template clonado e pronto para continuar, você 
 }
 ```
 
-**Dica**: Para criar uma categoria, sempre verifique antes se a categoria já existe no banco de dados. Por exemplo, se a categoria "Alimentação" não existir no banco de dados, crie essa categoria no mesmo momento, e utilize o id criado. Caso ela já exista, utilize o `id` que já está presente no banco de dados.
-
 - **`GET /transactions`**: Essa rota deve retornar uma listagem com todas as transações que você cadastrou até agora, junto com o valor da soma de entradas, retiradas e total de crédito. Essa rota deve retornar um objeto com o formato a seguir:
 
 ```json
@@ -87,28 +85,40 @@ Agora que você já está com o template clonado e pronto para continuar, você 
       "title": "Salário",
       "value": 4000,
       "type": "income",
-      "category": "Salary"
+      "category": {
+        "id": "uuid",
+        "title": "Salary"
+      }
     },
     {
       "id": "uuid",
       "title": "Freela",
       "value": 2000,
       "type": "income",
-      "category": "Others"
+      "category": {
+        "id": "uuid",
+        "title": "Others"
+      }
     },
     {
       "id": "uuid",
       "title": "Pagamento da fatura",
       "value": 4000,
       "type": "outcome",
-      "category": "Others"
+      "category": {
+        "id": "uuid",
+        "title": "Others"
+      }
     },
     {
       "id": "uuid",
       "title": "Cadeira Gamer",
       "value": 1200,
       "type": "outcome",
-      "category": "Recreation"
+      "category": {
+        "id": "uuid",
+        "title": "Recreation"
+      }
     }
   ],
   "balance": {
